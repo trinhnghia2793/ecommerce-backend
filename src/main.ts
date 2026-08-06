@@ -6,6 +6,7 @@ import { parseEnvOrigins } from './utils/parse-env-origins';
 import { ValidationPipe } from '@nestjs/common';
 import { VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 // get origin list
 const getCorsAllowList = (config: ConfigService) => {
@@ -17,10 +18,12 @@ const getCorsAllowList = (config: ConfigService) => {
 
 // bootstrap
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  app.useLogger(app.get(PinoLogger));
 
   // get env from config service
   const config = app.get(ConfigService);
+  const logger = app.get(PinoLogger);
 
   // cookie parser --> request.cookies() to get cookies
   app.use(cookieParser());
@@ -39,7 +42,9 @@ async function bootstrap() {
         return;
       }
 
-      // log warning
+      logger.warn(
+        `CORS: blocked request from origin ${requestOrigin} (not in allowList)`,
+      );
 
       callback(null, false);
     },
@@ -70,6 +75,8 @@ async function bootstrap() {
     defaultVersion: '1',
   });
 
-  await app.listen(config.get<number>('PORT') ?? 8080);
+  const port = config.get<number>('PORT', 8080);
+  await app.listen(port);
+  logger.log(`Application is running on port: ${port}`);
 }
 void bootstrap();
