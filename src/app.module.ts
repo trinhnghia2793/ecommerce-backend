@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { validateEnv } from './config/env.validation';
+
+const envFile =
+  process.env.NODE_ENV === 'production'
+    ? ['.env.prod', '.env']
+    : ['.env.dev', '.env'];
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+      validate: validateEnv,
+      envFilePath: envFile,
+    }),
+  ],
 })
 export class AppModule {}
