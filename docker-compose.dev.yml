@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ecommerce-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecommerce-mtc
+    ports:
+      - '5433:5432'
+    volumes:
+      - ecommerce-mtc-pgdata:/var/lib/postgresql/data
+
+volumes:
+  ecommerce-mtc-pgdata:
