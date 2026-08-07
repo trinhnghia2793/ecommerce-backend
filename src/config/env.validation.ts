@@ -20,9 +20,9 @@ export const envSchema = z.object({
   // REDIS_POST: z.coerce.number().optional(),
   // REDIS_PASSWORD: z.string().optional(),
 
-  // // throttler
-  // THROTTLE_TTL_MS: z.coerce.number().default(1000),
-  // THROTTLE_LIMIT: z.coerce.number().default(60),
+  // throttler
+  THROTTLE_TTL_MS: z.coerce.number().default(1000),
+  THROTTLE_LIMIT: z.coerce.number().default(60),
 
   // // auth
   // BETTER_AUTH_SECRET: z.string().min(1),
