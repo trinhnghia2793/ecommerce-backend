@@ -6,7 +6,7 @@ import { parseEnvOrigins } from './utils/parse-env-origins';
 import { ValidationPipe } from '@nestjs/common';
 import { VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Logger as PinoLogger } from 'nestjs-pino';
+import { Logger } from 'nestjs-pino';
 
 // get origin list
 const getCorsAllowList = (config: ConfigService) => {
@@ -19,11 +19,11 @@ const getCorsAllowList = (config: ConfigService) => {
 // bootstrap
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  app.useLogger(app.get(PinoLogger));
+  app.useLogger(app.get(Logger));
 
   // get env from config service
   const config = app.get(ConfigService);
-  const logger = app.get(PinoLogger);
+  const logger = app.get(Logger);
 
   // cookie parser --> request.cookies() to get cookies
   app.use(cookieParser());
