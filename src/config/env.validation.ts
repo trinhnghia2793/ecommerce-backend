@@ -8,11 +8,17 @@ export const envSchema = z.object({
   PORT: z.coerce.number().default(8080), // coerce --> force convert
 
   // database
-  DB_HOST: z.string().min(1).default('localhost'),
-  DB_PORT: z.coerce.number().default(5432),
-  DV_USERNAME: z.string().min(1).default('postgres'),
-  DB_PASSWORD: z.string().min(1).default('password'),
-  DB_NAME: z.string().min(1).default('ecommerce'),
+  DB_HOST: z.string().trim().min(1),
+  DB_PORT: z.coerce.number().int().min(1).max(65535),
+  DB_USERNAME: z.string().trim().min(1),
+  DB_PASSWORD: z.string().min(1),
+  DB_NAME: z.string().trim().min(1),
+
+  // database connection pool
+  DB_POOL_MAX: z.coerce.number().default(10),
+  DB_POOL_MIN: z.coerce.number().default(2),
+  DB_POOL_CONNECTION_TIMEOUT_MS: z.coerce.number().default(5000),
+  DB_POOL_IDLE_TIMEOUT_MS: z.coerce.number().default(30000),
 
   // // redis
   // REDIS_URL: z.string().optional(),
