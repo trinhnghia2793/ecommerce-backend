@@ -4,7 +4,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v7 as uuidv7 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export abstract class BaseUuidEntity {
   @PrimaryColumn({
@@ -15,13 +15,13 @@ export abstract class BaseUuidEntity {
   @BeforeInsert()
   generateId() {
     if (!this.id) {
-      this.id = uuidv7();
+      this.id = uuidv4();
     }
   }
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 }
