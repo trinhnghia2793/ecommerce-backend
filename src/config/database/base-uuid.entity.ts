@@ -4,7 +4,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 
 export abstract class BaseUuidEntity {
   @PrimaryColumn({
@@ -15,7 +15,7 @@ export abstract class BaseUuidEntity {
   @BeforeInsert()
   generateId() {
     if (!this.id) {
-      this.id = uuidv4();
+      this.id = uuidv7();
     }
   }
 
