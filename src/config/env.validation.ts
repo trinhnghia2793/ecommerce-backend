@@ -43,10 +43,10 @@ export const envSchema = z.object({
   // ADMIN_PANEL_URL: z.string().optional(),
   // CORS_OTHER_ORIGINS: z.string().optional(),
 
-  // // email
-  // SMTP_USER: z.string().optional(),
-  // SMTP_PASS: z.string().optional(),
-  // SMTP_FROM: z.string().optional(),
+  // email
+  SMTP_USER: z.email(),
+  SMTP_PASS: z.string().min(1),
+  SMTP_FROM: z.email(),
 
   // // elastic search
   // ELASTICSEARCH_NODE: z.string().optional(),
