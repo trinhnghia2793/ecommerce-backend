@@ -1,11 +1,18 @@
 import { z } from 'zod';
 
 // declare
-export const envSchema = z.object({
+export const envSchema = z.looseObject({
   NODE_ENV: z
     .enum(['development', 'production', 'test'])
     .default('development'),
   PORT: z.coerce.number().default(8080), // coerce --> force convert
+
+  // CORS
+  CLIENT_URL: z.string().trim().min(1),
+  CORS_OTHER_URL: z.string().trim().optional(),
+  // NEXT_PUBLIC_APP_URL: z.string().optional(),
+  // LANDING_PAGE_URL: z.string().optional(),
+  // ADMIN_PANEL_URL: z.string().optional(),
 
   // database
   DB_HOST: z.string().trim().min(1),
@@ -36,37 +43,13 @@ export const envSchema = z.object({
   // BETTER_AUTH_SAMESITE_NONE: z.string().optional(),
   // BETTER_AUTH_TRUSTED_ORIGINS: z.string().optional(),
 
-  // // CORS
-  // CLIENT_URL: z.string().optional(),
-  // NEXT_PUBLIC_APP_URL: z.string().optional(),
-  // LANDING_PAGE_URL: z.string().optional(),
-  // ADMIN_PANEL_URL: z.string().optional(),
-  // CORS_OTHER_ORIGINS: z.string().optional(),
-
   // email
   SMTP_USER: z.email(),
   SMTP_PASS: z.string().min(1),
   SMTP_FROM: z.email(),
 
-  // // elastic search
-  // ELASTICSEARCH_NODE: z.string().optional(),
-  // ELASTICSEARCH_USERNAME: z.string().optional(),
-  // ELASTICSEARCH_PASSWORD: z.string().optional(),
-
-  // // supabase
-  // SUPABASE_URL: z.string().url().optional(),
-  // SUPABASE_ANON_KEY: z.string().optional(),
-  // SUPABASE_BUCKET_NAME: z.string().optional(),
-
-  // // payos
-  // PAYOS_CLIENT_ID: z.string().optional(),
-  // PAYOS_API_KEY: z.string().optional(),
-  // PAYOS_CHECKSUM_KEY: z.string().optional(),
-  // PAYOS_RETURN_URL: z.string().optional(),
-  // PAYOS_CANCEL_URL: z.string().optional(),
-
-  // // guest pool
-  // GUEST_POOL_USER_ID: z.string().optional(),
+  BETTER_AUTH_SECRET: z.string().min(32),
+  INTERNAL_API_SECRET: z.string().min(32),
 });
 
 // generate TypeScript Type based on envSchema

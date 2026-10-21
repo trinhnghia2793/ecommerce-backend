@@ -19,20 +19,22 @@ export function setupApp(
   const allowList = appCfg.corsOrigins;
   app.enableCors({
     origin: (requestOrigin: string, callback) => {
+      // requests from postman, thunder client... (not have origin) --> approved
       if (!requestOrigin) {
         callback(null, true);
         return;
       }
 
+      // requests from allow list --> approved
       if (allowList.includes(requestOrigin)) {
         callback(null, true);
         return;
       }
 
+      // block requests not in allow list
       logger.warn(
         `CORS: blocked request from origin ${requestOrigin} (not in allowList)`,
       );
-
       callback(null, false);
     },
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],

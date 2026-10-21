@@ -12,7 +12,7 @@ import { InternalSecretGuard } from 'src/core/guards/internal-secret.guard';
 import { SendAuthEmailDto } from './dto/send-auth-email.dto';
 
 @ApiExcludeController() //Exclude this API from Swagger
-@Controller('inernal/email')
+@Controller('internal/email')
 @UseGuards(InternalSecretGuard)
 export class InternalEmailController {
   constructor(private readonly emailService: EmailService) {}

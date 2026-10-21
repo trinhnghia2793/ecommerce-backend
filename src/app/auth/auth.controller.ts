@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Query,
-  Req,
-} from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Req } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -14,7 +7,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service';
 import { SessionAuthService } from './session-auth/session-auth.service';
 import { plainToInstance } from 'class-transformer';
@@ -26,7 +18,7 @@ import { ResEx } from 'src/swagger/response-examples';
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
+    // private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly sessionAuth: SessionAuthService,
   ) {}
@@ -53,22 +45,22 @@ export class AuthController {
     };
   }
 
-  // verify user email
-  @Get('verify-email')
-  @ApiOperation({
-    summary: 'Verify email through token (query)',
-    operationId: 'auth_verify_email',
-  })
-  @ApiOkResponse({
-    description: 'Response example',
-    schema: { example: ResEx.auth.verifyEmail },
-  })
-  async verifyEmail(
-    @Query('token') token: string,
-    @Query('email') email: string,
-  ) {
-    return this.authService.verifyEmailCustom(token, email);
-  }
+  // verify user email (not used, auth.service.ts deleted)
+  // @Get('verify-email')
+  // @ApiOperation({
+  //   summary: 'Verify email through token (query)',
+  //   operationId: 'auth_verify_email',
+  // })
+  // @ApiOkResponse({
+  //   description: 'Response example',
+  //   schema: { example: ResEx.auth.verifyEmail },
+  // })
+  // async verifyEmail(
+  //   @Query('token') token: string,
+  //   @Query('email') email: string,
+  // ) {
+  //   return this.authService.verifyEmailCustom(token, email);
+  // }
 
   // get current user info (get-me)
   @Get('me')
