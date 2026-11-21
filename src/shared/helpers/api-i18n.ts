@@ -1,4 +1,8 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 
 const messages: Record<string, string> = {
   'errors.common.userNotFound': 'User not found',
@@ -20,4 +24,9 @@ export function apiBadRequest(key: string): never {
 // handle error not found throwing
 export function apiNotFound(key: string): never {
   throw new NotFoundException(translateApiMessage(key));
+}
+
+// handle error conflict throwing
+export function apiConflict(key: string): never {
+  throw new ConflictException(translateApiMessage(key));
 }
